@@ -14,7 +14,7 @@ import os
 
 from fedutils.train_utils import get_data
 
-from utils.options import args_parser, build_args_and_env, renewal_args
+from utils.options import args_parser, renewal_args
 from utils.config import setup
 
 from models.model_factory import create_model
@@ -25,7 +25,14 @@ from solver.build import build_lr_scheduler
 
 import pdb
 
+def build_args_and_env(run_args):
+    
+    assert run_args.config_file and os.path.isfile(run_args.config_file),  \
+    'cannot locate config file'
+    args = setup(run_args.config_file)
+    args.config_file = run_args.config_file
 
+    return args
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='FedSuperNet Training')

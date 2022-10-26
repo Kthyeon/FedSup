@@ -139,3 +139,9 @@ dmypy.json
 output
 *.gif
 *.csv
+
+# data
+/data
+
+# results
+/save_pn

@@ -113,7 +113,7 @@ class FedDynamicModel(MyNetwork):
             for m in self.modules():
                 if isinstance(m, MobileInvertedResidualBlock):
                     if isinstance(m.mobile_inverted_conv, DynamicMBConvLayer) and m.shortcut is not None:
-                        m.mobile_inverted_conv.point_linear.bn.rmsnorm.weight.zero_()
+                        m.mobile_inverted_conv.point_linear.bn.pnorm.weight.zero_()
     
     
     @staticmethod

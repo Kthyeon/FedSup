@@ -3,8 +3,9 @@
 # Python version: 3.6
 
 import argparse
+import os
 
-__all__ = ['args_parser', 'build_args_and_env', 'renewal_args']
+__all__ = ['args_parser', 'renewal_args']
 
 def args_parser(parser):
     # federated arguments
@@ -84,14 +85,7 @@ def args_parser(parser):
     
     return parser
 
-def build_args_and_env(run_args):
-    
-    assert run_args.config_file and os.path.isfile(run_args.config_file), 
-    'cannot locate config file'
-    args = setup(run_args.config_file)
-    args.config_file = run_args.config_file
 
-    return args
 
 def renewal_args(args, run_args):
     

@@ -1,0 +1,114 @@
+#### models ####
+arch: 'fed_nas_dynamic_model'
+
+exp_name: "efficient_fedsup"
+
+sandwich_rule: False
+
+grad_clip_value: 1.0
+
+
+label_smoothing: 0.0
+inplace_distill: False
+
+
+bn_momentum: 0
+bn_eps: 1e-5
+
+post_bn_calibration_batch_num: 64
+
+num_arch_training: 2
+
+
+warmup_epochs: 10
+start_epoch: 0
+epochs: 500
+
+
+#### cloud training resources  ####
+data_loader_workers_per_gpu: 4
+
+########### regularization ################
+# supernet training regularization (the largest network)
+dropout: 0.2
+drop_connect: 0.2
+drop_connect_only_last_two_stages: False
+
+weight_decay_weight: 0.0001
+weight_decay_bn_bias: 0.
+
+## =================== optimizer and scheduler======================== #
+optimizer:
+    method: sgd
+    momentum: 0.1
+    nesterov: False
+
+lr_scheduler:
+    method: "warmup_cosine_lr"
+    base_lr: 0.1
+    clamp_lr_percent: 0.0
+
+print_freq: 10
+resume: ""
+
+seed: 0
+
+supernet_config:
+    resolutions: [32]
+    first_conv: 
+        c: [32]
+        act_func: 'relu'
+        s: 2
+    mb1:
+        c: [32,64]
+        d: [1]
+        k: [3,5,7]
+        t: [1]
+        s: 1
+        act_func: 'relu'
+        se: False
+    mb2:
+        c: [64,128]
+        d: [1,2]
+        k: [3,5,7]
+        t: [1]
+        s: 2
+        act_func: 'relu'
+        se: False
+    mb3:
+        c: [128,256] 
+        d: [1,2]
+        k: [3,5,7]
+        t: [1]
+        s: 2
+        act_func: 'relu'
+        se: False
+    mb4:
+        c: [512,1024] 
+        d: [1,2]
+        k: [3,5,7]
+        t: [1]
+        s: 2
+        act_func: 'relu'
+        se: False
+
+gpu: 1
+dataset: 'cifar100'
+num_classes: 100
+lr: 0.1
+num_users: 100
+shard_per_user: 10
+frac: 0.1
+local_ep: 1
+local_bs: 32
+results_save: 'dy_run1'
+bs: 50
+split: 'user'
+iid: False
+unbalanced: False
+server_data_ratio: 0.0
+test_freq: 1
+verbose: True
+diri: False
+beta: 0.01
+architecture_option: 'max_supernet'
